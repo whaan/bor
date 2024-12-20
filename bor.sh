@@ -25,7 +25,7 @@ apply_exif_annotation()
 {
     if [ $# -eq 2 ]; then
         decho "Apply exif annotation: $1 for $2"
-        declare `convert -ping "$2" -format "cameramodel=%[EXIF:model]\n focallength=%[EXIF:FocalLength]\n fnumber=%[EXIF:FNumber]\n exptime=%[EXIF:ExposureTime]\n isospeed=%[EXIF:PhotographicSensitivity]\n" info:`
+        declare `magick -ping "$2" -format "cameramodel=%[EXIF:model]\n focallength=%[EXIF:FocalLength]\n fnumber=%[EXIF:FNumber]\n exptime=%[EXIF:ExposureTime]\n isospeed=%[EXIF:PhotographicSensitivity]\n" info:`
         fnumber1=`echo $fnumber | cut -d/ -f1`
         fnumber2=`echo $fnumber | cut -d/ -f2`
         fnumber=`echo "scale=1; $fnumber1/$fnumber2" | bc`
@@ -146,7 +146,7 @@ if [ -z "$OUTPUT_FILE" ]; then
     echo "No output file specified, use default output file: $OUTPUT_FILE"
 fi
 
-COMMAND="convert $INPUT_FILE "
+COMMAND="magick $INPUT_FILE "
 
 if [ ! -z "$ARGS_RESIZE" ]; then
     COMMAND="${COMMAND} -resize ${ARGS_RESIZE} "
@@ -170,7 +170,7 @@ if [ ! -z "$ARGS_BORDER" ]; then
     if [ -z "$ARGS_BORDERCOLOR" ]; then
         ARGS_BORDERCOLOR="White"
     fi
-    COMMAND="convert ${INPUT_FILE} -bordercolor ${ARGS_BORDERCOLOR} -border ${ARGS_BORDER} ${OUTPUT_FILE}"
+    COMMAND="magick ${INPUT_FILE} -bordercolor ${ARGS_BORDERCOLOR} -border ${ARGS_BORDER} ${OUTPUT_FILE}"
     decho "${COMMAND}"
     eval $COMMAND
     INPUT_FILE=$OUTPUT_FILE
@@ -198,14 +198,14 @@ OFFSET_H=`echo "${BORDER_H} - ${FONT_SIZE} - (${FONT_SIZE} / 10)" | bc`
 decho "Border size ${BORDER_W} x ${BORDER_H}"
 
 if [ ! -z "$ARGS_CUSTOM_TEXT" -a ! -z "$ARGS_BORDER" ]; then
-    COMMAND="convert ${INPUT_FILE} -gravity southwest -pointsize ${FONT_SIZE} -annotate +${BORDER_W}+${OFFSET_H} \"${ARGS_CUSTOM_TEXT}\" ${OUTPUT_FILE}"
+    COMMAND="magick ${INPUT_FILE} -gravity SouthWest -pointsize ${FONT_SIZE} -annotate +${BORDER_W}+${OFFSET_H} \"${ARGS_CUSTOM_TEXT}\" ${OUTPUT_FILE}"
     decho "${COMMAND}"
     eval $COMMAND
     INPUT_FILE=$OUTPUT_FILE
 fi
 
 if [ ! -z "$ARGS_ANNOTATION_TEXT" -a ! -z "$ARGS_BORDER" ]; then
-    COMMAND="convert ${INPUT_FILE} -gravity Southeast -pointsize ${FONT_SIZE} -annotate +${BORDER_W}+${OFFSET_H} \"${ARGS_ANNOTATION_TEXT}\" ${OUTPUT_FILE}"
+    COMMAND="magick ${INPUT_FILE} -gravity SouthEast -pointsize ${FONT_SIZE} -annotate +${BORDER_W}+${OFFSET_H} \"${ARGS_ANNOTATION_TEXT}\" ${OUTPUT_FILE}"
     decho "${COMMAND}"
     eval $COMMAND
 fi
