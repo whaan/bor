@@ -8,11 +8,12 @@ ARGS_ANNOTATION_TEXT=
 ARGS_EXIF_OPTIONS=
 ARGS_FONT_SIZE="medium"
 ARGS_CUSTOM_TEXT=
+ARGS_COPYRIGHT=
 DEBUG_ENABLED=""
 
 usage() {
     echo "Usage:"
-    echo "`basename $0`  [-b border options] [-d](enable debug output) [-e EXIF options] [-f (small|medium|large)] [-q quality] [-r resize options] [-t custom text] input_file [output_file]"
+    echo "`basename $0`  [-b border options] [-d](enable debug output) [-e EXIF options] [-f (small|medium|large)] [-q quality] [-r resize options] [-t custom text] [-c copyright] input_file [output_file]"
 }
 
 decho() {
