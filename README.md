@@ -10,7 +10,7 @@ The script currently can add borders, and write EXIF text below the photo; As we
 The script uses [ImageMagic®](https://www.imagemagick.org) mainly, [ExifTool](https://www.sno.phy.queensu.ca/~phil/exiftool/) is also needed if you want to remove EXIF from the photo itself, both of them can be install via [Homebrew](https://brew.sh/):
 
 ```
-brew install imagemagic
+brew install imagemagick
 brew install exiftool
 ```
 
@@ -64,10 +64,26 @@ add border around photo.jpg, the border is 5% of image width and 10% of image he
 
 **add EXIF on border**
 
-add specified EXIF information at bottom right of image border, medium font size
+add specified EXIF information at bottom left of image border, medium font size
 
 ```
 ./bor.sh -b 5%x10% -e cameramodel,focallength,fnumber,exptime,isospeed,stripexif -f medium photo.jpg
+```
+
+**add CUSTOM TEXT (Title) on border**
+
+add Photo Title information at top centre of image border, medium font size
+
+```
+./bor.sh -b 5%x10% -e cameramodel,focallength,fnumber,exptime,isospeed,stripexif -f medium -t "my title" photo.jpg
+```
+
+**add COPYRIGHT on border**
+
+add COPYRIGHT information at bottom right of image border, medium font size
+
+```
+./bor.sh -b 5%x10% -e cameramodel,focallength,fnumber,exptime,isospeed,stripexif -f medium -c "my name" photo.jpg
 ```
 
 Possible font sizes:
@@ -88,7 +104,7 @@ Possible EXIF data (separated by comma when specified for -e):
 **Example with all options specified**
 
 ```
-./bor.sh -b 5%x10% -e cameramodel,focallength,fnumber,exptime,isospeed,stripexif -f medium -r 80% -q 70 photo.jpg photo_output.jpg
+./bor.sh -d -b 5%x10% -e cameramodel,focallength,fnumber,exptime,isospeed,stripexif -f medium-t "my title" -c "my name" -r 80% -q 70 photo.jpg photo_output.jpg
 ```
 
 ## run_for_all.sh
@@ -117,4 +133,4 @@ photo009_bor.jpg
 
 ![Generated photo](./photo_output.jpg "Generate photo")
 
-I'll keep improving this script, please let me know how you think.
+I'll keep improving this script, please let me know what you think.
